@@ -1,0 +1,121 @@
+{
+  "name": "rest-api",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/rest-api/src",
+  "projectType": "application",
+  "tags": [],
+  "targets": {
+    "remove-container": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "docker rm -f rest-api-container"
+        ],
+        "parallel": false
+      }
+    },  
+    "remove-deployment": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "kubectl delete deployment rest-api-deployment --ignore-not-found=true"
+        ],
+        "parallel": false
+      }
+    }, 
+    "remove-service": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "kubectl delete service rest-api-deployment --ignore-not-found=true"
+        ],
+        "parallel": false
+      }
+    }, 
+    "k8s-deploy": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "kubectl apply -f deploy/rest-api-deployment.yaml"
+        ],
+        "parallel": false
+      }
+    },
+    "k8s-service-deploy": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "kubectl apply -f deploy/rest-api-service.yml"
+        ],
+        "parallel": false
+      }
+    },
+    "docker-build": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "docker build -t rest-api -f /Users/cristiano_anselmi/projects/notification-engine/packages/rest-api/Dockerfile ."
+        ],
+        "parallel": false
+      }
+    },
+    "docker-run": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "docker run -d -p 3000:3000 --name rest-api-container rest-api"
+        ],
+        "parallel": false
+      }
+    },
+    "build": {
+      "executor": "@nx/esbuild:esbuild",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "platform": "node",
+        "outputPath": "dist/packages/rest-api",
+        "format": ["cjs"],
+        "bundle": false,
+        "main": "packages/rest-api/src/main.ts",
+        "tsConfig": "packages/rest-api/tsconfig.app.json",
+        "assets": ["packages/rest-api/src/assets"],
+        "generatePackageJson": true,
+        "esbuildOptions": {
+          "sourcemap": true,
+          "outExtension": {
+            ".js": ".js"
+          }
+        }
+      },
+      "configurations": {
+        "development": {},
+        "production": {
+          "esbuildOptions": {
+            "sourcemap": false,
+            "outExtension": {
+              ".js": ".js"
+            }
+          }
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "dependsOn": ["build"],
+      "options": {
+        "buildTarget": "rest-api:build",
+        "runBuildTargetDependencies": false
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "rest-api:build:development"
+        },
+        "production": {
+          "buildTarget": "rest-api:build:production"
+        }
+      }
+    }
+  }
+}

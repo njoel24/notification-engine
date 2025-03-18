@@ -1,0 +1,57 @@
+{
+  "name": "notification-engine",
+  "version": "0.0.0",
+  "license": "MIT",
+  "scripts": {
+    "build:images": "nx run rest-api:docker-build && nx run kafka-consumer:docker-build",
+    "run:containers": "nx run rest-api:docker-run && nx run kafka-consumer:docker-run",
+    "deploy:services": "nx run rest-api:k8s-service-deploy && nx run kafka-consumer:k8s-service-deploy ",
+    "deploy:containers": "nx run rest-api:k8s-deploy && nx run kafka-consumer:k8s-deploy",
+    "remove:containers": "nx run rest-api:remove-container && nx run kafka-consumer:remove-container",
+    "remove:deployments": "nx run rest-api:remove-deployment && nx run kafka-consumer:remove-deployment",
+    "remove:services": "nx run rest-api:remove-service && nx run kafka-consumer:remove-service",
+    "start": "npm run clean && npm run build:images && npm run run:containers && npm run deploy:services && npm run deploy:containers && npm run get:pods",
+    "clean": "npm run remove:containers && npm run remove:deployments && npm run remove:services",
+    "get:pods": "kubectl get pods",
+    "get:containers": "docker ps --all",
+    "get:deployments": "kubectl get deployments",
+    "get:services": "kubectl get services"
+  },
+  "private": true,
+  "dependencies": {
+    "axios": "^1.6.0",
+    "express": "~4.18.1"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.8.0",
+    "@nrwl/node": "^19.8.4",
+    "@nrwl/workspace": "^19.8.4",
+    "@nx/esbuild": "19.8.4",
+    "@nx/eslint": "19.8.4",
+    "@nx/eslint-plugin": "19.8.4",
+    "@nx/jest": "19.8.4",
+    "@nx/js": "20.5.0",
+    "@nx/node": "19.8.4",
+    "@swc-node/register": "~1.9.1",
+    "@swc/core": "~1.5.7",
+    "@swc/helpers": "~0.5.11",
+    "@types/express": "~4.17.13",
+    "@types/jest": "^29.5.12",
+    "@types/node": "~18.16.9",
+    "esbuild": "^0.19.2",
+    "eslint": "^9.8.0",
+    "eslint-config-prettier": "^9.0.0",
+    "jest": "^29.7.0",
+    "jest-environment-node": "^29.7.0",
+    "nx": "20.5.0",
+    "prettier": "^2.6.2",
+    "ts-jest": "^29.1.0",
+    "ts-node": "10.9.1",
+    "tslib": "^2.3.0",
+    "typescript": "~5.7.2",
+    "typescript-eslint": "^8.0.0"
+  },
+  "workspaces": [
+    "packages/*"
+  ]
+}
