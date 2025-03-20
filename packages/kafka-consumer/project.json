@@ -54,7 +54,7 @@
       "executor": "nx:run-commands",
       "options": {
         "commands": [
-          "docker build -t kafka-consumer -f /Users/cristiano_anselmi/projects/notification-engine/packages/kafka-consumer/Dockerfile ."
+          "docker build -t kafka-consumer -f ./packages/kafka-consumer/Dockerfile ."
         ],
         "parallel": false
       }
@@ -78,7 +78,7 @@
         "format": ["cjs"],
         "bundle": false,
         "main": "packages/kafka-consumer/src/main.ts",
-        "tsConfig": "packages/kafka-consumer/tsconfig.app.json",
+        "tsConfig": "tsconfig.json",
         "assets": ["packages/kafka-consumer/src/assets"],
         "generatePackageJson": true,
         "esbuildOptions": {

@@ -54,7 +54,7 @@
       "executor": "nx:run-commands",
       "options": {
         "commands": [
-          "docker build -t rest-api -f /Users/cristiano_anselmi/projects/notification-engine/packages/rest-api/Dockerfile ."
+          "docker build -t rest-api -f ./packages/rest-api/Dockerfile ."
         ],
         "parallel": false
       }
@@ -78,7 +78,7 @@
         "format": ["cjs"],
         "bundle": false,
         "main": "packages/rest-api/src/main.ts",
-        "tsConfig": "packages/rest-api/tsconfig.app.json",
+        "tsConfig": "tsconfig.json",
         "assets": ["packages/rest-api/src/assets"],
         "generatePackageJson": true,
         "esbuildOptions": {
