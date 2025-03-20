@@ -1,4 +1,4 @@
-# Requiements 
+# Instructions 
 - Install Docker Desktop and enable kubernetes
 - npm i and npm run start
 
