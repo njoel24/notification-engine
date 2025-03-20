@@ -2,7 +2,7 @@
 FROM node:18-alpine
 
 # Set the working directory
-WORKDIR /Users/cristiano_anselmi/projects/notification-engine
+WORKDIR .
 
 # Install TypeScript globally
 RUN npm install -g typescript ts-node
