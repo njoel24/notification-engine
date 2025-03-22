@@ -4,6 +4,7 @@
 - remove run:container and use nx only
 - k8s node and sharing between docker and k8s
 - dev and prod environment
+- master node, worker node and control panel
 
 # Src
 

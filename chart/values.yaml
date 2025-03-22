@@ -136,6 +136,6 @@ kafka:
   serviceType: NodePort
   image: kafka-consumer:latest
   replicas: 1
-  containerPort: 4000
+  containerPort: 8080
   servicePort: 81
   pullPolicy: Never

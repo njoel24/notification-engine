@@ -3,6 +3,7 @@ kind: Service
 metadata:
   name: {{ .Values.rest.name }}
 spec:
+  type: {{ .Values.rest.serviceType }}  # This uses the value from values.yml
   selector:
     app: {{ .Values.rest.name }}
   ports:
@@ -16,6 +17,7 @@ kind: Service
 metadata:
   name: {{ .Values.kafka.name }}
 spec:
+  type: {{ .Values.kafka.serviceType }}  # This uses the value from values.yml
   selector:
     app: {{ .Values.kafka.name }}
   ports:
