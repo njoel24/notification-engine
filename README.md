@@ -1,6 +1,9 @@
 # Instructions 
 - Install Docker Desktop and enable kubernetes
 - npm i and npm run start
+- remove run:container and use nx only
+- k8s node and sharing between docker and k8s
+- dev and prod environment
 
 # Src
 

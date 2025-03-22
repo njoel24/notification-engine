@@ -27,7 +27,7 @@
       "executor": "nx:run-commands",
       "options": {
         "commands": [
-          "kubectl delete service rest-api-deployment --ignore-not-found=true"
+          "kubectl delete service rest-api-service --ignore-not-found=true"
         ],
         "parallel": false
       }

@@ -4,18 +4,16 @@
   "license": "MIT",
   "scripts": {
     "build:images": "nx run rest-api:docker-build && nx run kafka-consumer:docker-build",
-    "run:containers": "nx run rest-api:docker-run && nx run kafka-consumer:docker-run",
-    "deploy:services": "nx run rest-api:k8s-service-deploy && nx run kafka-consumer:k8s-service-deploy ",
-    "deploy:containers": "nx run rest-api:k8s-deploy && nx run kafka-consumer:k8s-deploy",
-    "remove:containers": "nx run rest-api:remove-container && nx run kafka-consumer:remove-container",
-    "remove:deployments": "nx run rest-api:remove-deployment && nx run kafka-consumer:remove-deployment",
-    "remove:services": "nx run rest-api:remove-service && nx run kafka-consumer:remove-service",
-    "start": "npm run clean && npm run build:images && npm run run:containers && npm run deploy:services && npm run deploy:containers && npm run get:pods",
-    "clean": "npm run remove:containers && npm run remove:deployments && npm run remove:services",
+    "start": "npm run build:images  && npm run helm:install",
+    "clean": " npm run helm:uninstall",
     "get:pods": "kubectl get pods",
     "get:containers": "docker ps --all",
     "get:deployments": "kubectl get deployments",
-    "get:services": "kubectl get services"
+    "get:services": "kubectl get services",
+    "helm:install": "helm install notification-engine ./chart --replace",
+    "helm:get-ns": "helm list --all-namespaces",
+    "helm:upgrade": "helm upgrade notification-engine ./chart",
+    "helm:uninstall": "helm uninstall notification-engine || true"
   },
   "private": true,
   "dependencies": {

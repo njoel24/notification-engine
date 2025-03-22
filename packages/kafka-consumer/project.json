@@ -27,7 +27,7 @@
       "executor": "nx:run-commands",
       "options": {
         "commands": [
-          "kubectl delete service kafka-consumer-deployment --ignore-not-found=true"
+          "kubectl delete service kafka-consumer-service --ignore-not-found=true"
         ],
         "parallel": false
       }
