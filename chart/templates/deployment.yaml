@@ -15,7 +15,7 @@ spec:
       containers:
         - name: {{ .Values.rest.name }}
           image: {{ .Values.rest.image }}
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          imagePullPolicy: {{ .Values.rest.pullPolicy }}
           ports:
             - containerPort: {{ .Values.rest.containerPort }}
 
@@ -37,6 +37,6 @@ spec:
       containers:
         - name: {{ .Values.kafka.name }}
           image: {{ .Values.kafka.image }}
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          imagePullPolicy: {{ .Values.kafka.pullPolicy }}
           ports:
             - containerPort: {{ .Values.kafka.containerPort }}

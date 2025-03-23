@@ -12,6 +12,7 @@
     "get:services": "kubectl get services",
     "helm:install": "helm install notification-engine ./chart --replace",
     "helm:get-ns": "helm list --all-namespaces",
+    "helm:get-ingress": "kubectl get ingress -n default",
     "helm:upgrade": "helm upgrade notification-engine ./chart",
     "helm:uninstall": "helm uninstall notification-engine || true"
   },

@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ .Values.rest.name }}
+  name: {{ .Values.rest.serviceName }}
 spec:
   type: {{ .Values.rest.serviceType }}  # This uses the value from values.yml
   selector:
@@ -15,7 +15,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ .Values.kafka.name }}
+  name: {{ .Values.kafka.serviceName }}
 spec:
   type: {{ .Values.kafka.serviceType }}  # This uses the value from values.yml
   selector:
@@ -24,3 +24,7 @@ spec:
     - protocol: TCP
       port: {{ .Values.kafka.servicePort }}
       targetPort: {{ .Values.kafka.containerPort }}
+  sessionAffinity: ClientIP
+  sessionAffinityConfig:
+    clientIP:
+      timeoutSeconds: 10800  # 3 hours, adjust as needed
