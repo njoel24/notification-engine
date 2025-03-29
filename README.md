@@ -1,10 +1,18 @@
 # Instructions 
 - Install Docker Desktop and enable kubernetes
 - npm i and npm run start
-- remove run:container and use nx only
+
+# Specific instruction to install ingress-nginx
+- helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
+- helm repo update
+- helm install my-ingress ingress-nginx/ingress-nginx
+- echo "127.0.0.1 notification.local" | sudo tee -a /etc/hosts
+
+# Todos
 - k8s node and sharing between docker and k8s
 - dev and prod environment
 - master node, worker node and control panel
+- k8s namespaces
 
 # Src
 

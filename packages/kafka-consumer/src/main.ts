@@ -5,8 +5,8 @@ const port = process.env.PORT ? Number(process.env.PORT) : 8080;
 
 const app = express();
 
-app.get('/', (req, res) => {
-  res.send({ message: 'Hello API' });
+app.get('/ws', (req, res) => {
+  res.send({ message: 'Hello Kafka Consumer' });
 });
 
 app.listen(port, host, () => {

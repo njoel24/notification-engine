@@ -19,5 +19,5 @@ kafka:
   replicaCount: 3
   image: kafka-consumer:latest
   containerPort: 8080
-  servicePort: 81
+  servicePort: 80
   pullPolicy: Never
