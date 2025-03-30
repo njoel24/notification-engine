@@ -18,4 +18,4 @@ COPY . .
 EXPOSE 8080
 
 # Run the application
-CMD ["ts-node", "packages/kafka-consumer/src/main.ts"]
+CMD ["ts-node", "packages/wsservice/src/main.ts"]

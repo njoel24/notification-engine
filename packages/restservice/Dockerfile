@@ -18,4 +18,4 @@ COPY . .
 EXPOSE 3000
 
 # Run the application
-CMD ["ts-node", "packages/rest-api/src/main.ts"]
+CMD ["ts-node", "packages/restservice/src/main.ts"]

@@ -1,15 +1,44 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ .Values.rest.serviceName }}
+  name: {{ .Values.restservice.serviceName }}
 spec:
-  type: {{ .Values.rest.serviceType }}  # This uses the value from values.yml
+  type: {{ .Values.restservice.serviceType }}  # This uses the value from values.yml
   selector:
-    app: {{ .Values.rest.name }}
+    app: {{ .Values.restservice.name }}
   ports:
     - protocol: TCP
-      port: {{ .Values.rest.servicePort }}
-      targetPort: {{ .Values.rest.containerPort }}
+      port: {{ .Values.restservice.servicePort }}
+      targetPort: {{ .Values.restservice.containerPort }}
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.wsservice.serviceName }}
+spec:
+  type: {{ .Values.wsservice.serviceType }}  # This uses the value from values.yml
+  selector:
+    app: {{ .Values.wsservice.name }}
+  ports:
+    - protocol: TCP
+      port: {{ .Values.wsservice.servicePort }}
+      targetPort: {{ .Values.wsservice.containerPort }}
+  sessionAffinity: ClientIP
+  sessionAffinityConfig:
+    clientIP:
+      timeoutSeconds: 10800  # 3 hours, adjust as needed
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.zookeeper.serviceName }}
+spec:
+  ports:
+  - port: {{ .Values.zookeeper.servicePort }}
+    targetPort: {{ .Values.zookeeper.servicePort }}
+  selector:
+    app: {{ .Values.zookeeper.serviceName }}
 
 ---
 apiVersion: v1
@@ -17,14 +46,8 @@ kind: Service
 metadata:
   name: {{ .Values.kafka.serviceName }}
 spec:
-  type: {{ .Values.kafka.serviceType }}  # This uses the value from values.yml
-  selector:
-    app: {{ .Values.kafka.name }}
   ports:
-    - protocol: TCP
-      port: {{ .Values.kafka.servicePort }}
-      targetPort: {{ .Values.kafka.containerPort }}
-  sessionAffinity: ClientIP
-  sessionAffinityConfig:
-    clientIP:
-      timeoutSeconds: 10800  # 3 hours, adjust as needed
+  - port: {{ .Values.kafka.servicePort }}
+    targetPort: {{ .Values.kafka.servicePort }}
+  selector:
+    app: {{ .Values.kafka.serviceName }}

@@ -1,24 +1,70 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Values.rest.name }}
+  name: {{ .Values.restservice.name }}
 spec:
-  replicas: {{ .Values.rest.replicas }}
+  replicas: {{ .Values.restservice.replicas }}
   selector:
     matchLabels:
-      app: {{ .Values.rest.name }}
+      app: {{ .Values.restservice.name }}
   template:
     metadata:
       labels:
-        app: {{ .Values.rest.name }}
+        app: {{ .Values.restservice.name }}
     spec:
       containers:
-        - name: {{ .Values.rest.name }}
-          image: {{ .Values.rest.image }}
-          imagePullPolicy: {{ .Values.rest.pullPolicy }}
+        - name: {{ .Values.restservice.name }}
+          image: {{ .Values.restservice.image }}
+          imagePullPolicy: {{ .Values.restservice.pullPolicy }}
           ports:
-            - containerPort: {{ .Values.rest.containerPort }}
+            - containerPort: {{ .Values.restservice.containerPort }}
 
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.wsservice.name }}
+spec:
+  replicas: {{ .Values.wsservice.replicas }}
+  selector:
+    matchLabels:
+      app: {{ .Values.wsservice.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.wsservice.name }}
+    spec:
+      containers:
+        - name: {{ .Values.wsservice.name }}
+          image: {{ .Values.wsservice.image }}
+          imagePullPolicy: {{ .Values.wsservice.pullPolicy }}
+          ports:
+            - containerPort: {{ .Values.wsservice.containerPort }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.zookeeper.name }}
+spec:
+  replicas: {{ .Values.zookeeper.replicas }}
+  selector:
+    matchLabels:
+      app: {{ .Values.zookeeper.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.zookeeper.name }}
+    spec:
+      containers:
+      - name: {{ .Values.zookeeper.name }}
+        image: {{ .Values.zookeeper.image }}
+        ports:
+        - containerPort: {{ .Values.zookeeper.servicePort }}
+        env:
+        - name: ZOOKEEPER_CLIENT_PORT
+          value: "{{ .Values.zookeeper.servicePort }}"
+        - name: ZOOKEEPER_TICK_TIME
+          value: "2000"
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -35,8 +81,16 @@ spec:
         app: {{ .Values.kafka.name }}
     spec:
       containers:
-        - name: {{ .Values.kafka.name }}
-          image: {{ .Values.kafka.image }}
-          imagePullPolicy: {{ .Values.kafka.pullPolicy }}
-          ports:
-            - containerPort: {{ .Values.kafka.containerPort }}
+      - name: {{ .Values.kafka.name }}
+        image: {{ .Values.kafka.image }}
+        ports:
+        - containerPort: {{ .Values.kafka.servicePort }}
+        env:
+        - name: KAFKA_BROKER_ID
+          value: "1"
+        - name: KAFKA_ZOOKEEPER_CONNECT
+          value: "{{ .Values.kafka.zookeeperConnect }}"
+        - name: KAFKA_ADVERTISED_LISTENERS
+          value: "PLAINTEXT://kafka:{{ .Values.kafka.servicePort }}"
+        - name: KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR
+          value: "1"

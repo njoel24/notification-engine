@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "build:images": "nx run rest-api:docker-build && nx run kafka-consumer:docker-build",
+    "build:images": "nx run restservice:docker-build || nx run wsservice:docker-build || nx run kafka:docker-build",
     "start": "npm run build:images  && npm run helm:install",
     "clean": " npm run helm:uninstall",
     "get:pods": "kubectl get pods",
@@ -14,12 +14,15 @@
     "helm:get-ns": "helm list --all-namespaces",
     "helm:get-ingress": "kubectl get ingress -n default",
     "helm:upgrade": "helm upgrade notification-engine ./chart",
-    "helm:uninstall": "helm uninstall notification-engine || true"
+    "helm:uninstall": "helm uninstall notification-engine || true",
+    "docker:kafka-topics": "docker exec -it kafka bash && kafka-topics --create --topic notifications --bootstrap-server localhost:9092 --partitions 1 --replication-factor 1"
   },
   "private": true,
   "dependencies": {
     "axios": "^1.6.0",
-    "express": "~4.18.1"
+    "express": "~4.18.1",
+    "kafkajs": "^2.2.4",
+    "ws": "^8.18.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.8.0",

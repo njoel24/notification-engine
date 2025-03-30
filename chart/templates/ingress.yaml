@@ -15,20 +15,20 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: {{ .Values.rest.serviceName }}  # Matches values.yaml
+            name: {{ .Values.restservice.serviceName }}  # Matches values.yaml
             port:
               number: 80
       - path: /
         pathType: Prefix
         backend:
           service:
-            name: {{ .Values.rest.serviceName }} # This must match `kubectl get svc`
+            name: {{ .Values.restservice.serviceName }} # This must match `kubectl get svc`
             port:
               number: 80
       - path: /ws
         pathType: Prefix
         backend:
           service:
-            name: {{ .Values.kafka.serviceName }} # This must match `kubectl get svc`
+            name: {{ .Values.wsservice.serviceName }} # This must match `kubectl get svc`
             port:
               number: 80
