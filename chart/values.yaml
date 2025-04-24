@@ -9,7 +9,7 @@ restservice:
   image: restservice:latest
   replicaCount: 2
   containerPort: 3000
-  servicePort: 80
+  servicePort: 81
   pullPolicy: Never
 
 wsservice:

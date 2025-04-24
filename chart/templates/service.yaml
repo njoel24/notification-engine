@@ -29,25 +29,29 @@ spec:
     clientIP:
       timeoutSeconds: 10800  # 3 hours, adjust as needed
 ---
+# Zookeeper Service
 apiVersion: v1
 kind: Service
 metadata:
   name: {{ .Values.zookeeper.serviceName }}
 spec:
   ports:
-  - port: {{ .Values.zookeeper.servicePort }}
-    targetPort: {{ .Values.zookeeper.servicePort }}
+    - protocol: TCP
+      port: {{ .Values.zookeeper.servicePort }}
+      targetPort: {{ .Values.zookeeper.servicePort }}
   selector:
     app: {{ .Values.zookeeper.serviceName }}
 
 ---
+# Kafka Service
 apiVersion: v1
 kind: Service
 metadata:
   name: {{ .Values.kafka.serviceName }}
 spec:
   ports:
-  - port: {{ .Values.kafka.servicePort }}
-    targetPort: {{ .Values.kafka.servicePort }}
+    - protocol: TCP
+      port: {{ .Values.kafka.servicePort }}
+      targetPort: {{ .Values.kafka.servicePort }}
   selector:
     app: {{ .Values.kafka.serviceName }}

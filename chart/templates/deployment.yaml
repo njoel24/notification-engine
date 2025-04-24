@@ -1,74 +1,6 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Values.restservice.name }}
-spec:
-  replicas: {{ .Values.restservice.replicas }}
-  selector:
-    matchLabels:
-      app: {{ .Values.restservice.name }}
-  template:
-    metadata:
-      labels:
-        app: {{ .Values.restservice.name }}
-    spec:
-      containers:
-        - name: {{ .Values.restservice.name }}
-          image: {{ .Values.restservice.image }}
-          imagePullPolicy: {{ .Values.restservice.pullPolicy }}
-          ports:
-            - containerPort: {{ .Values.restservice.containerPort }}
-
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: {{ .Values.wsservice.name }}
-spec:
-  replicas: {{ .Values.wsservice.replicas }}
-  selector:
-    matchLabels:
-      app: {{ .Values.wsservice.name }}
-  template:
-    metadata:
-      labels:
-        app: {{ .Values.wsservice.name }}
-    spec:
-      containers:
-        - name: {{ .Values.wsservice.name }}
-          image: {{ .Values.wsservice.image }}
-          imagePullPolicy: {{ .Values.wsservice.pullPolicy }}
-          ports:
-            - containerPort: {{ .Values.wsservice.containerPort }}
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: {{ .Values.zookeeper.name }}
-spec:
-  replicas: {{ .Values.zookeeper.replicas }}
-  selector:
-    matchLabels:
-      app: {{ .Values.zookeeper.name }}
-  template:
-    metadata:
-      labels:
-        app: {{ .Values.zookeeper.name }}
-    spec:
-      containers:
-      - name: {{ .Values.zookeeper.name }}
-        image: {{ .Values.zookeeper.image }}
-        ports:
-        - containerPort: {{ .Values.zookeeper.servicePort }}
-        env:
-        - name: ZOOKEEPER_CLIENT_PORT
-          value: "{{ .Values.zookeeper.servicePort }}"
-        - name: ZOOKEEPER_TICK_TIME
-          value: "2000"
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
   name: {{ .Values.kafka.name }}
 spec:
   replicas: {{ .Values.kafka.replicas }}
@@ -94,3 +26,5 @@ spec:
           value: "PLAINTEXT://kafka:{{ .Values.kafka.servicePort }}"
         - name: KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR
           value: "1"
+        - name: KAFKA_LOG4J_LOGGERS
+          value: "kafka.controller=DEBUG,kafka.producer=DEBUG,kafka.network=DEBUG,kafka.server=DEBUG,kafka.request.logger=DEBUG,state.change.logger=TRACE"

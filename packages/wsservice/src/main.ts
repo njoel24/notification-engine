@@ -1,5 +1,5 @@
 import express from 'express';
-import { WebSocketServer } from 'ws';
+import { WebSocketServer, type WebSocket } from 'ws';
 import { Kafka } from 'kafkajs';
 
 const host = '0.0.0.0'; // Ensure it's not 'localhost'
@@ -30,9 +30,9 @@ const startConsumer = async () => {
       const notification = message.value?.toString();
       console.log(`Received message: ${notification}`);
 
-      wss.clients.forEach((client) => {
+      wss.clients.forEach((client: WebSocket) => {
         if (client.readyState === 1) {
-          client.send(notification);
+          client.send(notification as string);
         }
       });
     },

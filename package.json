@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "build:images": "nx run restservice:docker-build || nx run wsservice:docker-build || nx run kafka:docker-build",
+    "build:images": "nx run restservice:docker-build && nx run wsservice:docker-build && nx run kafka:docker-build",
     "start": "npm run build:images  && npm run helm:install",
     "clean": " npm run helm:uninstall",
     "get:pods": "kubectl get pods",
@@ -40,6 +40,7 @@
     "@types/express": "~4.17.13",
     "@types/jest": "^29.5.12",
     "@types/node": "~18.16.9",
+    "@types/ws": "^8.18.0",
     "esbuild": "^0.19.2",
     "eslint": "^9.8.0",
     "eslint-config-prettier": "^9.0.0",

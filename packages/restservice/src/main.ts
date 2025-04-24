@@ -22,7 +22,7 @@ const app = express();
 
 // HTTP endpoint to send notifications
 app.post('/notifications', async (req, res) => {
-  const { message } = req.body;
+  const { message } = req.body || {};
 
   if (!message) {
     return res.status(400).send({ error: 'Message is required' });
@@ -33,10 +33,10 @@ app.post('/notifications', async (req, res) => {
       topic: 'notifications',
       messages: [{ value: message }],
     });
-    res.status(200).send({ status: 'Message sent to Kafka' });
+    return res.status(200).send({ status: 'Message sent to Kafka' });
   } catch (error) {
     console.error('Error sending message to Kafka:', error);
-    res.status(500).send({ error: 'Failed to send message' });
+    return res.status(500).send({ error: 'Failed to send message' });
   }
 });
 

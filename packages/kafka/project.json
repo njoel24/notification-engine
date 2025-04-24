@@ -10,7 +10,7 @@
       "executor": "nx:run-commands",
       "options": {
         "commands": [
-          "docker-compose up -d -f ./packages/kafka/docker-compose.yml"
+          "docker-compose -f ./packages/kafka/docker-compose.yml up -d"
         ],
         "parallel": true
       }
