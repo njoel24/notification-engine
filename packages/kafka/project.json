@@ -10,9 +10,9 @@
       "executor": "nx:run-commands",
       "options": {
         "commands": [
-          "docker-compose -f ./packages/kafka/docker-compose.yml up -d"
+          "docker build -t kafka -f ./packages/kafka/Dockerfile ."
         ],
-        "parallel": true
+        "parallel": false
       }
     },
       "defaultConfiguration": "production",
