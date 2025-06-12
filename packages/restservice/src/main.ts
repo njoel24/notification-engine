@@ -3,7 +3,7 @@ import { Kafka } from 'kafkajs';
 
 const kafka = new Kafka({
   clientId: 'http-producer',
-  brokers: ['localhost:9092'],
+  brokers: ['kafka:9092'],
 });
 
 const producer = kafka.producer();
@@ -42,6 +42,10 @@ app.post('/notifications', async (req, res) => {
 
 app.get('/heart-rest', (req, res) => {
   res.send({ message: 'Sending heart beat from rest service' });
+});
+
+app.get('/', (req, res) => {
+  res.send({ message: 'Sending default response' });
 });
 
 app.listen(port, host, () => {

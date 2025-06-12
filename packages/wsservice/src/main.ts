@@ -14,7 +14,7 @@ console.log('WebSocket server running on ws://localhost:8081');
 // Kafka configuration
 const kafka = new Kafka({
   clientId: 'wsservice',
-  brokers: ['localhost:9092'], // Replace with your Kafka broker(s)
+  brokers: ['kafka:9092'], // Replace with your Kafka broker(s)
 });
 
 const consumer = kafka.consumer({ groupId: 'notification-group' });
